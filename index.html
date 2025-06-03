@@ -1,0 +1,42 @@
+<!DOCTYPE html><html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+  <title>仙人音ゲー</title>
+</head>
+<body>
+  <div id="home-screen" class="screen">
+    <h1>仙人音ゲー</h1>
+    <button onclick="showStartScreen()">スタート</button>
+    <button onclick="showHighScores()">ハイスコア</button>
+  </div>  <div id="start-screen" class="screen hidden">
+    <h2>難易度を選択</h2>
+    <button onclick="startGame('easy')">かんたん</button>
+    <button onclick="startGame('normal')">ふつう</button>
+    <button onclick="startGame('hard')">むずかしい</button>
+    <button onclick="goHome()">戻る</button>
+  </div>  <div id="game-screen" class="screen hidden">
+    <h2 id="difficulty-label"></h2>
+    <div id="game-area"></div>
+    <div id="combo-display">コンボ: 0</div>
+    <div id="score-display">スコア: 0</div>
+    <div id="rank-display">ランク: E</div>
+    <button onclick="endGame()">終了</button>
+  </div>  <div id="end-screen" class="screen hidden">
+    <h2>ゲーム終了！</h2>
+    <p id="final-score"></p>
+    <p id="final-rank"></p>
+    <button onclick="goHome()">ホームへ</button>
+  </div>  <div id="highscore-screen" class="screen hidden">
+    <h2>ハイスコア</h2>
+    <ul id="highscore-list"></ul>
+    <button onclick="goHome()">戻る</button>
+  </div>  <script src="score.js"></script>  <script src="script.js"></script>  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+    }
+  </script></body>
+</html>
