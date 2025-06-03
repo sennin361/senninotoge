@@ -1,28 +1,16 @@
-// script.js - ゲーム進行制御
+// script.js
 
-let combo = 0; let score = 0; let rank = 'E'; let difficulty = 'normal';
+const noteContainer = document.getElementById('note-container'); const scoreDisplay = document.getElementById('score'); const comboDisplay = document.getElementById('combo'); const rankDisplay = document.getElementById('rank'); const finalScore = document.getElementById('final-score'); const finalRank = document.getElementById('final-rank'); const highScoreDisplay = document.getElementById('high-score');
 
-function showStartScreen() { switchScreen('start-screen'); }
+let score = 0; let combo = 0; let difficulty = 'normal'; let interval = 1000; let gameInterval; let totalNotes = 0; let perfectHits = 0;
 
-function showHighScores() { updateHighScoreList(); switchScreen('highscore-screen'); }
+function startGame() { document.getElementById('start-screen').classList.remove('active'); document.getElementById('game-screen').classList.add('active'); difficulty = document.getElementById('difficulty').value; if (difficulty === 'easy') interval = 1200; if (difficulty === 'normal') interval = 900; if (difficulty === 'hard') interval = 600; score = 0; combo = 0; totalNotes = 0; perfectHits = 0; updateDisplay(); gameInterval = setInterval(spawnNote, interval); setTimeout(endGame, 30000); }
 
-function startGame(selectedDifficulty) { difficulty = selectedDifficulty; document.getElementById('difficulty-label').textContent = 難易度: ${selectedDifficulty}; combo = 0; score = 0; rank = 'E'; updateDisplay(); switchScreen('game-screen'); runGameLoop(); }
+function spawnNote() { const note = document.createElement('div'); note.className = 'note'; note.style.left = Math.random() * 90 + '%'; noteContainer.appendChild(note); totalNotes++; note.addEventListener('click', () => { perfectHits++; combo++; score += 100 * combo; updateDisplay(); note.remove(); }); setTimeout(() => { if (note.parentElement) { combo = 0; updateDisplay(); note.remove(); } }, interval); }
 
-function endGame() { document.getElementById('final-score').textContent = スコア: ${score}; document.getElementById('final-rank').textContent = ランク: ${rank}; saveHighScore(score, rank, difficulty); switchScreen('end-screen'); }
+function updateDisplay() { scoreDisplay.textContent = score; comboDisplay.textContent = combo; rankDisplay.textContent = getRank(score); }
 
-function goHome() { switchScreen('home-screen'); }
+function endGame() { clearInterval(gameInterval); document.getElementById('game-screen').classList.remove('active'); document.getElementById('end-screen').classList.add('active'); finalScore.textContent = score; finalRank.textContent = getRank(score); const highScore = saveHighScore(score, difficulty); highScoreDisplay.textContent = highScore; }
 
-function switchScreen(id) { document.querySelectorAll('.screen').forEach(screen => { screen.classList.add('hidden'); }); document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('active'); }
-
-function updateDisplay() { document.getElementById('combo-display').textContent = コンボ: ${combo}; document.getElementById('score-display').textContent = スコア: ${score}; document.getElementById('rank-display').textContent = ランク: ${rank}; }
-
-function runGameLoop() { const area = document.getElementById('game-area'); area.innerHTML = ''; const note = document.createElement('div'); note.style.width = '50px'; note.style.height = '50px'; note.style.background = 'yellow'; note.style.borderRadius = '50%'; note.style.position = 'absolute'; note.style.left = ${Math.random() * 80 + 10}%; note.style.top = '0'; area.appendChild(note);
-
-let start = Date.now(); const duration = difficulty === 'easy' ? 3000 : difficulty === 'hard' ? 1000 : 2000;
-
-const anim = setInterval(() => { const now = Date.now(); const progress = (now - start) / duration; if (progress >= 1) { clearInterval(anim); area.removeChild(note); combo = 0; updateRank(); updateDisplay(); runGameLoop(); return; } note.style.top = ${progress * 100}%; }, 16);
-
-note.addEventListener('click', () => { clearInterval(anim); area.removeChild(note); combo++; score += 100 * combo; updateRank(); updateDisplay(); runGameLoop(); }); }
-
-function updateRank() { if (score >= 10000) rank = 'S'; else if (score >= 7000) rank = 'A'; else if (score >= 4000) rank = 'B'; else if (score >= 2000) rank = 'C'; else if (score >= 1000) rank = 'D'; else rank = 'E'; }
+function getRank(score) { if (score >= 30000) return 'SS'; if (score >= 20000) return 'S'; if (score >= 15000) return 'A'; if (score >= 10000) return 'B'; if (score >= 5000) return 'C'; return 'D'; }
 
