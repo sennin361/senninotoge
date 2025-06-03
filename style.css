@@ -1,0 +1,26 @@
+/* style.css - 仙人音ゲー UI スタイル */
+
+body { font-family: 'Arial', sans-serif; background: linear-gradient(to bottom, #222, #111); color: #fff; text-align: center; margin: 0; padding: 0; }
+
+.screen { display: none; padding: 40px 20px; }
+
+.screen.active { display: block; }
+
+button { font-size: 1.2em; margin: 10px; padding: 10px 20px; border: none; border-radius: 10px; background: #4caf50; color: white; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); transition: background 0.3s; }
+
+button:hover { background: #45a049; }
+
+#game-area { margin: 30px auto; width: 90%; height: 300px; background: #333; border: 2px solid #555; border-radius: 10px; position: relative; overflow: hidden; }
+
+#combo-display, #score-display, #rank-display { margin-top: 20px; font-size: 1.4em; }
+
+.hidden { display: none; }
+
+ul#highscore-list { list-style: none; padding: 0; margin-top: 20px; }
+
+ul#highscore-list li { background: #222; margin: 5px auto; padding: 10px; border-radius: 5px; width: 80%; font-size: 1.1em; color: #ffeb3b; }
+
+h1, h2 { color: #00e5ff; }
+
+@media (hover: none) and (pointer: coarse) { button { font-size: 1.5em; padding: 15px 30px; } }
+
