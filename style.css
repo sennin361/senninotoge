@@ -1,26 +1,22 @@
-/* style.css - 仙人音ゲー UI スタイル */
+body { font-family: 'Arial', sans-serif; margin: 0; background-color: #111; color: white; text-align: center; }
 
-body { font-family: 'Arial', sans-serif; background: linear-gradient(to bottom, #222, #111); color: #fff; text-align: center; margin: 0; padding: 0; }
-
-.screen { display: none; padding: 40px 20px; }
+.screen { display: none; padding: 2em; }
 
 .screen.active { display: block; }
 
-button { font-size: 1.2em; margin: 10px; padding: 10px 20px; border: none; border-radius: 10px; background: #4caf50; color: white; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); transition: background 0.3s; }
+#note-container { height: 300px; position: relative; margin: 20px auto; width: 80%; border: 2px solid #fff; background-color: #222; overflow: hidden; }
 
-button:hover { background: #45a049; }
+.note { width: 60px; height: 20px; background-color: #0ff; position: absolute; bottom: 0; animation: fall 2s linear forwards; border-radius: 10px; }
 
-#game-area { margin: 30px auto; width: 90%; height: 300px; background: #333; border: 2px solid #555; border-radius: 10px; position: relative; overflow: hidden; }
+@keyframes fall { from { top: 0; } to { top: 280px; } }
 
-#combo-display, #score-display, #rank-display { margin-top: 20px; font-size: 1.4em; }
+button { padding: 10px 20px; margin: 10px; font-size: 1.2em; border-radius: 10px; border: none; background: #0af; color: white; cursor: pointer; }
 
-.hidden { display: none; }
+button:hover { background: #09f; }
 
-ul#highscore-list { list-style: none; padding: 0; margin-top: 20px; }
+select { font-size: 1em; padding: 5px; }
 
-ul#highscore-list li { background: #222; margin: 5px auto; padding: 10px; border-radius: 5px; width: 80%; font-size: 1.1em; color: #ffeb3b; }
+#scoreboard { margin-top: 1em; font-size: 1.2em; background: #333; padding: 10px; border-radius: 10px; display: inline-block; }
 
-h1, h2 { color: #00e5ff; }
-
-@media (hover: none) and (pointer: coarse) { button { font-size: 1.5em; padding: 15px 30px; } }
+@media (max-width: 600px) { #note-container { width: 95%; } button { font-size: 1em; } }
 
